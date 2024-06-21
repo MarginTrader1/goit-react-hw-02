@@ -50,9 +50,9 @@ const App = () => {
 
       {totalFeedback > 0 ? (
         <Feedback
-          good={state.good}
-          neutral={state.neutral}
-          bad={state.bad}
+          good={good}
+          neutral={neutral}
+          bad={bad}
           total={totalFeedback}
           positive={positive}
         />
