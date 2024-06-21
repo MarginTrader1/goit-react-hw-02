@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import css from "./App.module.css"
+
 import Description from "../Description/Description";
 import Options from "../Options/Options";
 import Feedback from "../Feedback/Feedback";
@@ -11,9 +13,10 @@ const initialState = { //начальный cтейт
   bad: 0,
 };
 
+// функция получения данных с локал сторедж
 const getStateFromLocalStorage = () => {
   const state = JSON.parse(localStorage.getItem("feedback"));
-  return state === null ? initialState : state; //проверяем локал сторедж
+  return state === null ? initialState : state; //проверяем данные
 
 };
 
@@ -41,7 +44,7 @@ const App = () => {
   }, [state]);
 
   return (
-    <>
+    <section className={css.container}>
       <Description />
       <Options options={state} click={updateFeedback} reset={resetState}/>
 
@@ -56,7 +59,7 @@ const App = () => {
       ) : (
         <Notification />
       )}
-    </>
+    </section>
   );
 };
 
