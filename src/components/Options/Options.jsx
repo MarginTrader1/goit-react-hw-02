@@ -12,7 +12,7 @@ const Options = ({ options, click, reset }) => {
       ))}
 
       {(good > 0 || neutral > 0 || bad > 0) && (
-        <button className={css.button} onClick={() => reset()}>
+        <button className={css.button} onClick={reset}>
           {"reset"}
         </button> //рендер кнопки по условию
       )}
