@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 
-import css from "./App.module.css"
+import css from "./App.module.css";
 
 import Description from "../Description/Description";
 import Options from "../Options/Options";
 import Feedback from "../Feedback/Feedback";
 import Notification from "../Notification/Notification";
 
-const initialState = { //начальный cтейт
+const initialState = {
+  //начальный cтейт
   good: 0,
   neutral: 0,
   bad: 0,
@@ -17,21 +18,20 @@ const initialState = { //начальный cтейт
 const getStateFromLocalStorage = () => {
   const state = JSON.parse(localStorage.getItem("feedback"));
   return state === null ? initialState : state; //проверяем данные
-
 };
 
 const App = () => {
-  const [state, setState] = useState(getStateFromLocalStorage); //делаем стейт 
+  const [state, setState] = useState(getStateFromLocalStorage); //делаем стейт
 
-  // функция изменения стейта 
+  // функция изменения стейта
   const updateFeedback = (feedbackType) => {
     setState({ ...state, [feedbackType]: state[feedbackType] + 1 });
   };
 
   // функция сброса стейта
   const resetState = () => {
-    setState(initialState)
-  }
+    setState(initialState);
+  };
 
   const { good, neutral, bad } = state;
 
@@ -46,7 +46,7 @@ const App = () => {
   return (
     <section className={css.container}>
       <Description />
-      <Options options={state} click={updateFeedback} reset={resetState}/>
+      <Options options={state} click={updateFeedback} reset={resetState} />
 
       {totalFeedback > 0 ? (
         <Feedback
