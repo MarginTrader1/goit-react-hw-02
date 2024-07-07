@@ -8,59 +8,53 @@ import Feedback from "../Feedback/Feedback";
 import Notification from "../Notification/Notification";
 
 const initialState = {
-  //начальный cтейт
-  good: 0,
-  neutral: 0,
-  bad: 0,
+   //начальный cтейт
+   good: 0,
+   neutral: 0,
+   bad: 0,
 };
 
 // функция получения данных с локал сторедж
 const getStateFromLocalStorage = () => {
-  const state = JSON.parse(localStorage.getItem("feedback"));
-  return state === null ? initialState : state; //проверяем данные
+   const state = JSON.parse(localStorage.getItem("feedback"));
+   return state === null ? initialState : state; //проверяем данные
 };
 
 const App = () => {
-  const [state, setState] = useState(getStateFromLocalStorage); //делаем стейт
+   const [state, setState] = useState(getStateFromLocalStorage); //делаем стейт
 
-  // функция изменения стейта
-  const updateFeedback = (feedbackType) => {
-    setState({ ...state, [feedbackType]: state[feedbackType] + 1 });
-  };
+   // функция изменения стейта
+   const updateFeedback = (feedbackType) => {
+      setState((prevState) => {
+         return { ...prevState, [feedbackType]: prevState[feedbackType] + 1 };
+      });
+   };
 
-  // функция сброса стейта
-  const resetState = () => {
-    setState(initialState);
-  };
+   // setState({ ...state, [feedbackType]: state[feedbackType] + 1 });
 
-  const { good, neutral, bad } = state;
+   // функция сброса стейта
+   const resetState = () => {
+      setState(initialState);
+   };
 
-  const totalFeedback = good + neutral + bad;
-  const positive = Math.round((good / totalFeedback) * 100);
+   const { good, neutral, bad } = state;
 
-  //сохраняем в локал сторедж
-  useEffect(() => {
-    localStorage.setItem("feedback", JSON.stringify(state));
-  }, [state]);
+   const totalFeedback = good + neutral + bad;
+   const positive = Math.round((good / totalFeedback) * 100);
 
-  return (
-    <section className={css.container}>
-      <Description />
-      <Options options={state} click={updateFeedback} reset={resetState} />
+   //сохраняем в локал сторедж
+   useEffect(() => {
+      localStorage.setItem("feedback", JSON.stringify(state));
+   }, [state]);
 
-      {totalFeedback > 0 ? (
-        <Feedback
-          good={good}
-          neutral={neutral}
-          bad={bad}
-          total={totalFeedback}
-          positive={positive}
-        />
-      ) : (
-        <Notification />
-      )}
-    </section>
-  );
+   return (
+      <section className={css.container}>
+         <Description />
+         <Options options={state} click={updateFeedback} reset={resetState} />
+
+         {totalFeedback > 0 ? <Feedback good={good} neutral={neutral} bad={bad} total={totalFeedback} positive={positive} /> : <Notification />}
+      </section>
+   );
 };
 
 export default App;
