@@ -52,7 +52,17 @@ const App = () => {
          <Description />
          <Options options={state} click={updateFeedback} reset={resetState} />
 
-         {totalFeedback > 0 ? <Feedback good={good} neutral={neutral} bad={bad} total={totalFeedback} positive={positive} /> : <Notification />}
+         {totalFeedback > 0 ? (
+            <Feedback
+               good={good}
+               neutral={neutral}
+               bad={bad}
+               total={totalFeedback}
+               positive={positive}
+            />
+         ) : (
+            <Notification />
+         )}
       </section>
    );
 };
