@@ -25,7 +25,6 @@ const App = () => {
 
    // функция изменения стейта
    const updateFeedback = (feedbackType) => {
-      console.log(state.__proto__)
       setState((prevState) => {
          return { ...prevState, [feedbackType]: prevState[feedbackType] + 1 };
       });
